@@ -1,5 +1,37 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+#root {
+  background-color: #fff;
+  height: 100%;  
+  padding: 20px;
+}
 body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  line-height: 1.5;
 }
+
+
+/* My Reads custom layout */
+
+
+/* header */
+.header {
+  font: bold 20px sans-serif;
+  padding: 10px;
+  text-align: center;
+}
+
+/* body */
+
+.category-title {
+  font: bold 16px sans-serif;  
+  border-bottom: 1px solid #000;
+  padding: 10px;
+}
+

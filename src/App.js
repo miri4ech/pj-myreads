@@ -1,20 +1,24 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import * as BooksAPI from './utils/BooksAPI'
+import ListBooks from './ListBooks'
 
 class App extends Component {
+  state = {
+    books: []
+  }
+  componentDidMount(){
+    BooksAPI.getAll().then((books) =>{
+      this.setState({books})
+    })
+  }
+
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+        <div className="header">My Reads</div>
+        <ListBooks books={this.state.books}/>
       </div>
-    );
+    )
   }
 }
 
