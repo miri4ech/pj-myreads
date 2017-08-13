@@ -96,3 +96,32 @@ body {
   margin-bottom: 16px;
   padding: 10px; 
 }
+
+.to-search {
+  background-image: url("./icons/add.svg");
+  background-repeat: no-repeat;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  outline: 0;
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+}
+
+.to-home {
+  background-image: url("./icons/arrow-back.svg");
+  background-repeat: no-repeat;  
+  position: fixed;
+  width: 35px;
+  height: 35px;
+  top: 18px;
+  left: 10px;
+}
+
+.search-books {
+  font-size: 24px;
+  outline: 0;
+  width: 100%;
+  padding: 20px 20px 20px 60px;
+}
