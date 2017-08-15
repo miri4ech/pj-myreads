@@ -14,7 +14,8 @@ $ cd pj-myreads
 ## Build
 
 ```bash
-$ npm install
+$ npm install 
+$ npm update  
 $ npm start
 ```
 
