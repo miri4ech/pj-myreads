@@ -143,6 +143,7 @@ body {
   -webkit-transition: .3s ease-in-out;
   transition: .3s ease-in-out;
   border-radius: 50%;
+  outline: 0;
 }
 
 .showing-contacts > button:hover {

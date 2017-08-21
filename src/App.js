@@ -7,7 +7,8 @@ import SearchBooks from './SearchBooks'
 class App extends Component {
 
   state = {
-    books: []
+    books: [],
+    search: [],
   }
 
   componentDidMount() {

@@ -2,12 +2,24 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import escapeRegExp from 'escape-string-regexp'
+import * as BooksAPI from './utils/BooksAPI'
+import { Route } from 'react-router-dom'
+import ListBooks from './ListBooks'
+
+
 
 
 class SearchBooks extends Component {
 
   state = {
     query: '',
+    updated: '',
+    books: [],    
+  }
+  componentDidMount() {
+    BooksAPI.search(this.state.query, 30).then((books) => {
+      this.setState({ books })
+    })
   }
 
   makeShelf = (book) => (
@@ -17,7 +29,7 @@ class SearchBooks extends Component {
       </a>
       <p>{book.title}</p>
       <small>{book.authors[0]}</small>
-      <select value={book.shelf} onChange={(event) => this.selectStatus(event.target.value)}>
+      <select value={book.shelf} onChange={(event) => this.selectStatus(book, event.target.value)}>
         <option value="currentlyReading">currently Reading</option>
         <option value="wantToRead">want To Read</option>
         <option value="read">Read</option>
@@ -33,18 +45,24 @@ class SearchBooks extends Component {
     this.setState({ query: '' })
   }
 
+  selectStatus = (book, status) => {
+    BooksAPI.update(book, status).then((updated) => (
+      this.setState({ updated })
+    ))
+  }
+
   render() {
-
-    const { books } = this.props
-    const { query } = this.state
-
+    const { query, books } = this.state
     let showingBooks
     if (query) {
       //RegExp match
       const match = new RegExp(escapeRegExp(query), 'i')
       showingBooks = books.filter((book) => match.test(book.title))
     } else {
-      showingBooks = books
+      BooksAPI.getAll().then((books) => {
+        this.setState({ books })
+      })
+      showingBooks = this.props.books
     }
 
     return (
@@ -59,9 +77,9 @@ class SearchBooks extends Component {
           />
           <Link to="/" className="to-home"></Link>
         </div>
-        {showingBooks.length !== books.length && (
+        {showingBooks.length !== this.props.books.length && (
           <div className="showing-contacts">
-            <span>Now Showing {showingBooks.length} of {books.length} total</span>
+            <span>Now Showing {showingBooks.length} of {this.props.books.length} total</span>
             <button onClick={this.clearQuery}>Show all</button>
           </div>
         )}
@@ -72,6 +90,11 @@ class SearchBooks extends Component {
             ))}
           </div>
         </div>
+        {this.state.update && (
+          <Route exact path="/" render={() => (
+            <ListBooks books={this.state.updated} />
+          )} />
+        )}
       </div>
     )
   }
