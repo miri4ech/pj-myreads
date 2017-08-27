@@ -23,5 +23,5 @@ $ npm install serve -g
 $ serve -s build 
 ```
 
-You can see the site locally. [http://localhost:3000/](http://localhost:3000/)  
+You can see the site locally. [http://localhost:5000/](http://localhost:5000/)  
 

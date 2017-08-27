@@ -5,10 +5,11 @@ import ListBooks from './ListBooks'
 import SearchBooks from './SearchBooks'
 
 class App extends Component {
-
-  state = {
-    books: [],
-    search: [],
+  constructor (props) {
+    super(props)
+    this.state = {
+      books: [],
+    }
   }
 
   componentDidMount() {
@@ -24,7 +25,7 @@ class App extends Component {
             <ListBooks books={this.state.books} />
           )}/>
           <Route path="/search" render={({history}) => (
-            <SearchBooks books={this.state.books} />
+            <SearchBooks />
           )}/>
       </div>
     )

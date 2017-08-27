@@ -5,13 +5,16 @@ import { Link } from 'react-router-dom'
 
 class ListBooks extends Component {
 
-	state = {
-		books: this.props.books
+	constructor(props) {
+		super(props)
+		this.state = {
+			books: this.props.books,
+			status: ''
+		}
 	}
-	
-	selectStatus = (selected) => {
-		console.log("koko")
-		this.setState({status:selected})
+
+	selectStatus = (book, selectedShelf) => {
+		this.setState({ books: book, status: selectedShelf })
 	}
 
 	makeShelf = (book) => (
@@ -21,7 +24,7 @@ class ListBooks extends Component {
 			</a>
 			<p>{book.title}</p>
 			<small>{book.authors[0]}</small>
-			<select value={book.shelf} onChange={(event) => this.selectStatus(event.target.value)}>
+			<select value={book.shelf} onChange={(event) => this.selectStatus(book, event.target.value)}>
 				<option value="currentlyReading">currently Reading</option>
 				<option value="wantToRead">want To Read</option>
 				<option value="read">Read</option>
@@ -30,12 +33,6 @@ class ListBooks extends Component {
 	)
 
 	render() {
-		// const { status } = this.state
-
-		// if(status){
-		// 	console.log("koko")
-		// }
-
 		return (
 			<div>
 				<div className="header">My Reads</div>
@@ -58,9 +55,7 @@ class ListBooks extends Component {
 							this.makeShelf(book)
 						))}
 					</div>
-					<Link
-					to="/search"
-					><button className="to-search"></button></Link>
+					<Link to="/search"><button className="to-search"></button></Link>
 				</div>
 			</div>
 		)
