@@ -7,15 +7,9 @@ import * as BooksAPI from './utils/BooksAPI'
 class SearchBooks extends Component {
 
   state = {
-      query: '',
-      books: [],
+    query: '',
+    books: [],
   }
-  
-  // componendDidMount = () => {
-  //   BooksAPI.search(this.state.query,20).then((books) => {
-  //     this.setState({ books }) 
-  //   })
-  // }
 
   selectedStatus = (book, selectedShelf) => {
     BooksAPI.update(book, selectedShelf).then((books) => {
@@ -40,6 +34,9 @@ class SearchBooks extends Component {
 
   updateQuery = (query) => {
     this.setState({ query: query.trim() }) //removing white space
+    BooksAPI.search(this.state.query).then((books) => {
+      this.setState({ books })
+    })
   }
 
   clearQuery = () => {
@@ -49,14 +46,12 @@ class SearchBooks extends Component {
   render() {
     const { query, books } = this.state
     let showingBooks
-    if (query) {
+    if (query&&books) {
       //RegExp match
       const match = new RegExp(escapeRegExp(query), 'i')
+      console.log(this.state.books)
       showingBooks = books.filter((book) => match.test(book.title))
     } else {
-      // BooksAPI.getAll().then((books) => {
-      //   this.setState({ books })
-      // })
       showingBooks = this.state.books
     }
 
@@ -72,7 +67,7 @@ class SearchBooks extends Component {
           />
           <Link to="/" className="to-home"></Link>
         </div>
-        {showingBooks.length !== this.state.books.length && (
+        {this.state.books && showingBooks.length !== this.state.books.length && (
           <div className="showing-contacts">
             <span>Now Showing {showingBooks.length} of {this.state.books.length} total</span>
             <button onClick={this.clearQuery}>Show all</button>
@@ -80,7 +75,7 @@ class SearchBooks extends Component {
         )}
         <div className="content-body">
           <div className="wrapper">
-            {showingBooks.map(book => (
+            {this.state.books && showingBooks.map(book => (
               this.makeShelf(book)
             ))}
           </div>
