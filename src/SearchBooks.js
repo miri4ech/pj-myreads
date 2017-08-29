@@ -5,25 +5,26 @@ import * as BooksAPI from './utils/BooksAPI'
 
 class SearchBooks extends Component {
 
-  state = {
-    query: '',
-    books: this.props.books,
-    booksShelf: [],
-    viewStatus: true,
+  constructor(props) {
+    super(props)
+    this.state = {
+      query: '',
+      books: [],
+      // booksShelf: [],
+      viewStatus: true,
+    }
   }
 
-  shelfData = ''
-
-  componentDidMount() {
-    const bookAry = []
-    this.props.books.map((book) => {
-      let obj = {}
-      obj.id = book.id
-      obj.shelf = book.shelf
-      return bookAry.push(obj)
-    })
-    this.setState({ booksShelf: bookAry })
-  }
+  // componentDidMount() {
+  //   let bookAry = []
+  //   this.props.books.map((book) => {
+  //     let obj = {}
+  //     obj.id = book.id
+  //     obj.shelf = book.shelf
+  //     bookAry.push(obj)
+  //   })
+  //   this.state.booksShelf = bookAry
+  // }
 
   selectedStatus = (book, selectedShelf) => {
     BooksAPI.update(book, selectedShelf).then((books) => {
@@ -38,10 +39,7 @@ class SearchBooks extends Component {
       </a>
       <p>{book.title}</p>
       <small>{book.authors}</small>
-      {this.state.booksShelf.filter((data) => {
-        if (data.id === book.id) this.shelfData = data.shelf
-      })}
-      <select value={this.shelfData} onChange={(event) => this.selectedStatus(book, event.target.value)}>
+      <select value={book.shelf || ""} onChange={(event) => this.selectedStatus(book, event.target.value)}>
         <option value="">---</option>
         <option value="currentlyReading">currently Reading</option>
         <option value="wantToRead">want To Read</option>
@@ -65,6 +63,21 @@ class SearchBooks extends Component {
 
   render() {
     const { query, books } = this.state
+    console.log(books)
+
+    //add shelf to books
+    for (let i = 0; i < this.props.books; i++) {
+      console.log(this.props.books[i])
+      this.state.books.filter((book) => {
+        if (book.id === this.props[i].id) book.shelf = this.props[i].shelf
+      })
+    }
+    console.log(this.state.books)
+    // {this.state.booksShelf.filter((data) => {
+    //     if (data.id === books.id) 
+    //   })
+    // }
+
     return (
       <div>
         <div>
