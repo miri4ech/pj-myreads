@@ -1,14 +1,28 @@
 
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import escapeRegExp from 'escape-string-regexp'
 import * as BooksAPI from './utils/BooksAPI'
 
 class SearchBooks extends Component {
 
   state = {
     query: '',
-    books: [],
+    books: this.props.books,
+    booksShelf: [],
+    viewStatus: true,
+  }
+
+  shelfData = ''
+
+  componentDidMount() {
+    const bookAry = []
+    this.props.books.map((book) => {
+      let obj = {}
+      obj.id = book.id
+      obj.shelf = book.shelf
+      return bookAry.push(obj)
+    })
+    this.setState({ booksShelf: bookAry })
   }
 
   selectedStatus = (book, selectedShelf) => {
@@ -18,13 +32,17 @@ class SearchBooks extends Component {
   }
 
   makeShelf = (book) => (
-    <div className="book" key={book.title}>
+    <div className="book" key={book.id}>
       <a href={book.previewLink}>
         <img src={book.imageLinks.smallThumbnail} alt={book.title} />
       </a>
       <p>{book.title}</p>
-      <small>{book.authors[0]}</small>
-      <select value={book.shelf} onChange={(event) => this.selectedStatus(book, event.target.value)}>
+      <small>{book.authors}</small>
+      {this.state.booksShelf.filter((data) => {
+        if (data.id === book.id) this.shelfData = data.shelf
+      })}
+      <select value={this.shelfData} onChange={(event) => this.selectedStatus(book, event.target.value)}>
+        <option value="">---</option>
         <option value="currentlyReading">currently Reading</option>
         <option value="wantToRead">want To Read</option>
         <option value="read">Read</option>
@@ -33,28 +51,20 @@ class SearchBooks extends Component {
   )
 
   updateQuery = (query) => {
-    this.setState({ query: query.trim() }) //removing white space
-    BooksAPI.search(this.state.query).then((books) => {
-      this.setState({ books })
-    })
-  }
-
-  clearQuery = () => {
-    this.setState({ query: '' })
+    this.setState({ query: query.trim(), viewStatus: false })
+    if (query.length > 1) {
+      BooksAPI.search(query).then((books) => {
+        this.setState({ books })
+      }).catch((error) => {
+        this.setState({ books: [] })
+      })
+    } else {
+      this.setState({ viewStatus: true })
+    }
   }
 
   render() {
     const { query, books } = this.state
-    let showingBooks
-    if (query&&books) {
-      //RegExp match
-      const match = new RegExp(escapeRegExp(query), 'i')
-      console.log(this.state.books)
-      showingBooks = books.filter((book) => match.test(book.title))
-    } else {
-      showingBooks = this.state.books
-    }
-
     return (
       <div>
         <div>
@@ -67,16 +77,10 @@ class SearchBooks extends Component {
           />
           <Link to="/" className="to-home"></Link>
         </div>
-        {this.state.books && showingBooks.length !== this.state.books.length && (
-          <div className="showing-contacts">
-            <span>Now Showing {showingBooks.length} of {this.state.books.length} total</span>
-            <button onClick={this.clearQuery}>Show all</button>
-          </div>
-        )}
         <div className="content-body">
           <div className="wrapper">
-            {this.state.books && showingBooks.map(book => (
-              this.makeShelf(book)
+            {books && books.map(book => (
+              (this.state.viewStatus === false) ? this.makeShelf(book) : null
             ))}
           </div>
         </div>

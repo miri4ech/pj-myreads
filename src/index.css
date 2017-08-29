@@ -47,7 +47,8 @@ body {
   position: relative;
   text-align: center;
   width: 150px;
-  height: 250px;
+  height: 300px;
+  max-height: 400px;
 }
 
 .book:hover{
@@ -79,11 +80,19 @@ body {
 }
 
 .book select {
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  background-color: #14d0d6;
   background-image: url("./icons/arrow-drop-down.svg");
   background-repeat: no-repeat;
   position: absolute;
-  top: 169px;
-  right: 17px;
+  top: 140px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  font-size: 0;
 }
 
 .content-body {
@@ -106,7 +115,7 @@ body {
   border-radius: 50%;
   outline: 0;
   position: fixed;
-  right: 10px;
+  right: 15px;
   bottom: 10px;
 }
 
@@ -125,27 +134,4 @@ body {
   outline: 0;
   width: 100%;
   padding: 20px 20px 20px 60px;
-}
-
-.showing-contacts {
-  font-family: 'Lobster';
-  text-align: center;
-}
-
-.showing-contacts > button{
-  background-color: #14d0d6;
-  font-family: 'Lobster';  
-  margin: 10px;
-  position: relative;
-  display: inline-block;
-  padding: 10px;
-  border: 2px dotted #333;
-  -webkit-transition: .3s ease-in-out;
-  transition: .3s ease-in-out;
-  border-radius: 50%;
-  outline: 0;
-}
-
-.showing-contacts > button:hover {
-  color: #fff;
 }

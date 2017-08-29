@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import * as BooksAPI from './utils/BooksAPI'
 
 
 class ListBooks extends Component {
@@ -14,11 +15,13 @@ class ListBooks extends Component {
 	}
 
 	selectStatus = (book, selectedShelf) => {
-		this.setState({ books: book, status: selectedShelf })
+		BooksAPI.update(book, selectedShelf).then((books) => {
+			this.setState({ books })
+		})
 	}
 
 	makeShelf = (book) => (
-		<div className="book" key={book.title}>
+		<div className="book" key={book.id}>
 			<a href={book.previewLink}>
 				<img src={book.imageLinks.smallThumbnail} alt={book.title} />
 			</a>

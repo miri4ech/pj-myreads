@@ -25,7 +25,7 @@ class App extends Component {
             <ListBooks books={this.state.books} />
           )}/>
           <Route path="/search" render={({history}) => (
-            <SearchBooks />
+            <SearchBooks books={this.state.books}/>
           )}/>
       </div>
     )
