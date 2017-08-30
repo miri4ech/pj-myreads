@@ -93,6 +93,7 @@ body {
   border-radius: 50%;
   border: none;
   font-size: 0;
+  outline: none;
 }
 
 .content-body {

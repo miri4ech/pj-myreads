@@ -10,26 +10,12 @@ class SearchBooks extends Component {
     this.state = {
       query: '',
       books: [],
-      // booksShelf: [],
       viewStatus: true,
     }
   }
-
-  // componentDidMount() {
-  //   let bookAry = []
-  //   this.props.books.map((book) => {
-  //     let obj = {}
-  //     obj.id = book.id
-  //     obj.shelf = book.shelf
-  //     bookAry.push(obj)
-  //   })
-  //   this.state.booksShelf = bookAry
-  // }
-
-  selectedStatus = (book, selectedShelf) => {
-    BooksAPI.update(book, selectedShelf).then((books) => {
-      this.setState({ books })
-    })
+	updateStatus = (book, selectedShelf) => {
+		if (this.props.updateStatus)
+			this.props.updateStatus(book, selectedShelf)
   }
 
   makeShelf = (book) => (
@@ -39,8 +25,8 @@ class SearchBooks extends Component {
       </a>
       <p>{book.title}</p>
       <small>{book.authors}</small>
-      <select value={book.shelf || ""} onChange={(event) => this.selectedStatus(book, event.target.value)}>
-        <option value="">---</option>
+      <select value={book.shelf || ""} onChange={(event) => this.updateStatus(book, event.target.value)}>
+        <option value="" disabled></option>
         <option value="currentlyReading">currently Reading</option>
         <option value="wantToRead">want To Read</option>
         <option value="read">Read</option>
@@ -62,21 +48,14 @@ class SearchBooks extends Component {
   }
 
   render() {
+    
     const { query, books } = this.state
-    console.log(books)
-
     //add shelf to books
-    for (let i = 0; i < this.props.books; i++) {
-      console.log(this.props.books[i])
-      this.state.books.filter((book) => {
-        if (book.id === this.props[i].id) book.shelf = this.props[i].shelf
+    for (let i = 0; i < this.props.books.length; i++) {
+      books.filter((book) => {
+        if (book.id === this.props.books[i].id) book.shelf = this.props.books[i].shelf
       })
     }
-    console.log(this.state.books)
-    // {this.state.booksShelf.filter((data) => {
-    //     if (data.id === books.id) 
-    //   })
-    // }
 
     return (
       <div>

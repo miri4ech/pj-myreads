@@ -5,28 +5,47 @@ import ListBooks from './ListBooks'
 import SearchBooks from './SearchBooks'
 
 class App extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       books: [],
     }
   }
-
   componentDidMount() {
+    this.getAllBooks()
+  }
+
+  getAllBooks() {
     BooksAPI.getAll().then((books) => {
       this.setState({ books })
+    })
+  }
+
+  onUpdateStatus(book, selectedShelf) {
+    BooksAPI.update(book, selectedShelf).then(() => {
+      this.getAllBooks()
     })
   }
 
   render() {
     return (
       <div>
-          <Route exact path="/" render={()=>(
-            <ListBooks books={this.state.books} />
-          )}/>
-          <Route path="/search" render={({history}) => (
-            <SearchBooks books={this.state.books}/>
-          )}/>
+        <Route exact path="/" render={({ history }) => (
+          <ListBooks books={this.state.books}
+            updateStatus={(book, selectedShelf) => {
+              this.onUpdateStatus(book, selectedShelf)
+              history.push('/')
+            }}
+          />
+        )} />
+        <Route path="/search" render={({ history }) => (
+          <SearchBooks books={this.state.books}
+            updateStatus={(book, selectedShelf) => {
+              this.onUpdateStatus(book, selectedShelf)
+              history.push('/search')
+            }}
+          />
+        )} />
       </div>
     )
   }
