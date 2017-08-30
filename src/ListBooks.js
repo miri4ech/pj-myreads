@@ -5,8 +5,7 @@ import { Link } from 'react-router-dom'
 class ListBooks extends Component {
 
 	updateStatus = (book, selectedShelf) => {
-		if (this.props.updateStatus)
-			this.props.updateStatus(book, selectedShelf)
+		if (this.props.updateStatus) this.props.updateStatus(book, selectedShelf)
 	}
 
 	makeShelf = (book) => (

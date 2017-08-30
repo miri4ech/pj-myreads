@@ -13,9 +13,9 @@ class SearchBooks extends Component {
       viewStatus: true,
     }
   }
+  
 	updateStatus = (book, selectedShelf) => {
-		if (this.props.updateStatus)
-			this.props.updateStatus(book, selectedShelf)
+		if (this.props.updateStatus) this.props.updateStatus(book, selectedShelf)
   }
 
   makeShelf = (book) => (
@@ -48,7 +48,7 @@ class SearchBooks extends Component {
   }
 
   render() {
-    
+
     const { query, books } = this.state
     //add shelf to books
     for (let i = 0; i < this.props.books.length; i++) {
