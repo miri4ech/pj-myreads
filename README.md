@@ -1,10 +1,12 @@
 # MyRead
 
-## Requirements
+## Getting Started
+
+### Prerequisites
 
 - Nodejs(npm)
 
-## Installation
+### Installing
 
 ```bash
 $ git clone https://github.com/miri4ech/pj-myreads.git
@@ -15,7 +17,7 @@ $ cd pj-myreads
 $ npm install 
 ```
 
-## Build
+## Running the project
 
 ```bash 
 $ npm start
