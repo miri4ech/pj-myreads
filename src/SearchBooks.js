@@ -2,20 +2,33 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import * as BooksAPI from './utils/BooksAPI'
+import PropTypes from 'prop-types'
 
 class SearchBooks extends Component {
 
+  static propTypes = {
+    books: PropTypes.array.isRequired,
+    updateStatus: PropTypes.func.isRequired
+  }
+
   constructor(props) {
     super(props)
-    this.state = {
-      query: '',
-      books: [],
-      viewStatus: true,
-    }
+    this.state = { query: '', books: [] }
   }
-  
-	updateStatus = (book, selectedShelf) => {
-		if (this.props.updateStatus) this.props.updateStatus(book, selectedShelf)
+
+  updateStatus = (book, selectedShelf) => {
+    if (this.props.updateStatus) this.props.updateStatus(book, selectedShelf)
+  }
+
+  updateQuery = (query) => {
+    this.setState({ query: query.trim() })
+    if (query.length > 1) {
+      BooksAPI.search(query).then((books) => {
+        this.setState({ books })
+      }).catch((error) => {
+        this.setState({ books: [] })
+      })
+    }
   }
 
   makeShelf = (book) => (
@@ -34,19 +47,6 @@ class SearchBooks extends Component {
     </div>
   )
 
-  updateQuery = (query) => {
-    this.setState({ query: query.trim(), viewStatus: false })
-    if (query.length > 1) {
-      BooksAPI.search(query).then((books) => {
-        this.setState({ books })
-      }).catch((error) => {
-        this.setState({ books: [] })
-      })
-    } else {
-      this.setState({ viewStatus: true })
-    }
-  }
-
   render() {
 
     const { query, books } = this.state
@@ -54,6 +54,7 @@ class SearchBooks extends Component {
     for (let i = 0; i < this.props.books.length; i++) {
       books.filter((book) => {
         if (book.id === this.props.books[i].id) book.shelf = this.props.books[i].shelf
+        return book
       })
     }
 
@@ -72,7 +73,7 @@ class SearchBooks extends Component {
         <div className="content-body">
           <div className="wrapper">
             {books && books.map(book => (
-              (this.state.viewStatus === false) ? this.makeShelf(book) : null
+              this.makeShelf(book)
             ))}
           </div>
         </div>
