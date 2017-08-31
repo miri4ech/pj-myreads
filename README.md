@@ -13,15 +13,13 @@ $ cd pj-myreads
 
 ```bash
 $ npm install 
-$ npm update
-$ npm install serve -g
 ```
 
 ## Build
 
 ```bash 
-$ serve -s build 
+$ npm start
 ```
 
-You can see the site locally. [http://localhost:5000/](http://localhost:5000/)  
+You can see the site locally. [http://localhost:3000/](http://localhost:3000/)  
 
