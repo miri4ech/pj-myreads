@@ -1,4 +1,5 @@
 # MyRead
+This is a React project
 
 ## Getting Started
 
@@ -24,4 +25,14 @@ $ npm start
 ```
 
 You can see the site locally. [http://localhost:3000/](http://localhost:3000/)  
+
+## Demo
+
+![demo.com](https://github.com/miri4ech/pj-myreads/blob/demo/demo.gif)
+
+## License
+
+Code is open sourced under the [MIT license](LICENSE.md).
+
+
 
