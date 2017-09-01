@@ -11,14 +11,15 @@ class App extends Component {
       books: [],
     }
   }
-  componentDidMount() {
-    this.getAllBooks()
-  }
 
   getAllBooks() {
     BooksAPI.getAll().then((books) => {
       this.setState({ books })
     })
+  }
+
+  componentDidMount() {
+      this.getAllBooks()
   }
 
   onUpdateStatus(book, selectedShelf) {

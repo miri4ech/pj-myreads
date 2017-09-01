@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import * as BooksAPI from './utils/BooksAPI'
 import PropTypes from 'prop-types'
+import MakeShelves from './MakeShelves'
 
 class SearchBooks extends Component {
 
@@ -31,32 +32,18 @@ class SearchBooks extends Component {
     }
   }
 
-  makeShelf = (book) => (
-    <div className="book" key={book.id}>
-      <a href={book.previewLink}>
-        <img src={book.imageLinks.smallThumbnail} alt={book.title} />
-      </a>
-      <p>{book.title}</p>
-      <small>{book.authors}</small>
-      <select value={book.shelf || ""} onChange={(event) => this.updateStatus(book, event.target.value)}>
-        <option value="" disabled></option>
-        <option value="currentlyReading">currently Reading</option>
-        <option value="wantToRead">want To Read</option>
-        <option value="read">Read</option>
-      </select>
-    </div>
-  )
-
   render() {
 
     const { query, books } = this.state
+
     //add shelf to books
-    for (let i = 0; i < this.props.books.length; i++) {
+    function checkShelf(data) {
       books.filter((book) => {
-        if (book.id === this.props.books[i].id) book.shelf = this.props.books[i].shelf
+        if (book.id === data.id) book.shelf = data.shelf
         return book
       })
     }
+    this.props.books.forEach(checkShelf);
 
     return (
       <div>
@@ -71,11 +58,7 @@ class SearchBooks extends Component {
           <Link to="/" className="to-home"></Link>
         </div>
         <div className="content-body">
-          <div className="wrapper">
-            {books && books.map(book => (
-              this.makeShelf(book)
-            ))}
-          </div>
+          <MakeShelves books={books} updateStatus={this.updateStatus}　/>
         </div>
       </div>
     )
