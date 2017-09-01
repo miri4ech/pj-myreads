@@ -38,7 +38,7 @@ body {
   width: 100%;
   overflow: auto;
   padding: 16px 0;
-  -moz-column-fill: auto;  
+  display: inline-flex;
 }
 
 .book {
