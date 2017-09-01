@@ -1,5 +1,5 @@
 # MyRead
-This is a React project
+This is a React project / A Book Lending App
 
 ## Getting Started
 
