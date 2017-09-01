@@ -8,7 +8,7 @@ const MakeBooks = (props) =>
     <p>{props.book.title}</p>
     <small>{props.book.authors}</small>
     <select value={props.book.shelf || ""} onChange={(event) => props.updateStatus(props.book, event.target.value)}>
-      <option value="" disabled></option>
+      <option value="" disabled>Move to..</option>
       <option value="currentlyReading">currently Reading</option>
       <option value="wantToRead">want To Read</option>
       <option value="read">Read</option>

@@ -88,6 +88,7 @@ body {
 }
 
 .book select {
+  box-sizing: content-box;
   -webkit-appearance:none;
   -moz-appearance:none;
   background-color: #14d0d6;
@@ -102,6 +103,10 @@ body {
   border: none;
   font-size: 0;
   outline: none;
+}
+
+.book select > option {
+  padding: 10px;
 }
 
 .content-body {
