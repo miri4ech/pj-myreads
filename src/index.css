@@ -57,6 +57,7 @@ body {
   width: 150px;
   height: 300px;
   max-height: 400px;
+  display: inline-table;
 }
 
 .book:hover{
