@@ -37,16 +37,15 @@ class SearchBooks extends Component {
     const { query, books } = this.state
 
     //add shelf to books
-    function checkShelf(data) {
+    this.props.books.forEach((data) => {
       books.filter((book) => {
         if (book.id === data.id) book.shelf = data.shelf
         return book
       })
-    }
-    this.props.books.forEach(checkShelf);
+    })
 
     return (
-      <div>
+      <div id="search">
         <div>
           <input
             className="search-books"
